@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('model');
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('unit_classification_id');
-            $table->unsignedBigInteger('inclusion_id');
             $table->unsignedBigInteger('created_by');
             $table->string('photo_path');
             $table->double('range_from');
