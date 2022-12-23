@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('unit_model_id');
+            $table->string('model');
+            $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('unit_classification_id');
             $table->unsignedBigInteger('inclusion_id');
             $table->unsignedBigInteger('created_by');
