@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('default_value');
             $table->string('description')->nullable();
-            $table->string('photo_path')->nullable();
+            $table->string('icon_path')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
