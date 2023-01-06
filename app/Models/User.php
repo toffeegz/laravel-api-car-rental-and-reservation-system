@@ -40,4 +40,9 @@ class User extends Model
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
 }

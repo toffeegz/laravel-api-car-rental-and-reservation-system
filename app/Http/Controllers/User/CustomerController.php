@@ -4,6 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Services\Utils\ResponseServiceInterface;
+use App\Http\Requests\User\CustomerRequest as ModelRequest;
 
 class CustomerController extends Controller
 {
@@ -12,19 +15,28 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    private $modelRepository;
+    private $responseService;
+    private $name = 'Customer';
+    
+    public function __construct(
+        UserRepositoryInterface $modelRepository, 
+        ResponseServiceInterface $responseService
+    ) {
+        $this->modelRepository = $modelRepository;
+        $this->responseService = $responseService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index()
     {
-        //
+        $results = $this->modelRepository->userLists($is_customer = true, request(['search']), ['customer']);
+        return $this->responseService->successResponse($this->name, $results);
+    }
+
+    public function archive()
+    {
+        $results = $this->modelRepository->userArchive($is_customer = true, request(['search']), ['customer']);
+        return $this->responseService->successResponse($this->name, $results);
     }
 
     /**
@@ -33,9 +45,10 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ModelRequest $request)
     {
-        //
+        $result = $this->modelRepository->create($request->all());
+        return $this->responseService->storeResponse($this->name, $result);
     }
 
     /**
@@ -46,18 +59,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $result = $this->modelRepository->show($id);
+        return $this->responseService->successResponse($this->name, $result);
     }
 
     /**
@@ -67,9 +70,10 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ModelRequest $request, $id)
     {
-        //
+        $result = $this->modelRepository->update($request->all(), $id);
+        return $this->responseService->updateResponse($this->name, $result);
     }
 
     /**
@@ -78,8 +82,16 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(string $id)
     {
-        //
+        $result = $this->modelRepository->delete($id);
+        return $this->responseService->successResponse($this->name, $result);
     }
+
+    public function restore(string $id)
+    {
+        $result = $this->modelRepository->restore($id);
+        return $this->responseService->successResponse($this->name, $result);
+    }
+
 }

@@ -57,7 +57,9 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/api/company_information/company_information.php'));
 
             // CUSTOMER
-            // pending
+            Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api/customer/customer.php'));
 
             // INCLUSION
             Route::middleware('api')
