@@ -25,6 +25,8 @@ use App\Repositories\TransactionStatus\TransactionStatusRepository;
 use App\Repositories\TransactionStatus\TransactionStatusRepositoryInterface;
 use App\Repositories\Unit\UnitRepository;
 use App\Repositories\Unit\UnitRepositoryInterface;
+use App\Repositories\User\UserRepository;
+use App\Repositories\User\UserRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -46,6 +48,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
         $this->app->bind(TransactionStatusRepositoryInterface::class, TransactionStatusRepository::class);
         $this->app->bind(UnitRepositoryInterface::class, UnitRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**
