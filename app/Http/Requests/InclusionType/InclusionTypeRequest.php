@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\TransactionStatus;
+namespace App\Http\Requests\InclusionType;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class TransactionStatusStoreRequest extends FormRequest
+class InclusionTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,10 @@ class TransactionStatusStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', Rule::unique('transaction_statuses', 'name')->ignore($this->name)],
-            'description' => ['nullable', 'min:6', 'max:255'],
-            'status' => ['required', 'numeric']
+            'name' => ['required', Rule::unique('inclusion_types', 'name')->ignore($this->name)],
+            'default_value' => ['required', 'min:1', 'max:255'],
+            'description' => ['nullable', 'min:3', 'max:255'],
+            'icon_path' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
 }

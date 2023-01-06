@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\TransactionStatus;
+namespace App\Http\Requests\Inclusion;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class TransactionStatusUpdateRequest extends FormRequest
+class InclusionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class TransactionStatusUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,9 @@ class TransactionStatusUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'unit_id' => ['required', 'numeric', 'max:255'],
+            'unit_inclusion_id' => ['required', 'numeric', 'max:255'],
+            'value' => ['nullable', 'max:255'],
         ];
     }
 }

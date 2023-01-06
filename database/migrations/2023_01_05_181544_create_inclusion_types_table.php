@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('unit_inclusions', function (Blueprint $table) {
+        Schema::create('inclusion_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('default_value');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unit_inclusions');
+        Schema::dropIfExists('inclusion_types');
     }
 };

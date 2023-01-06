@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('inclusions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('unit_id');
-            $table->unsignedBigInteger('unit_inclusion_id');
+            $table->unsignedBigInteger('inclusion_type_id');
             $table->string('value')->nullable();
             $table->timestamps();
             $table->softDeletes();

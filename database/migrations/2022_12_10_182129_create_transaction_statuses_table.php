@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('transaction_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedSmallInteger('status');
+            $table->unsignedSmallInteger('status')->default(1);
             $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

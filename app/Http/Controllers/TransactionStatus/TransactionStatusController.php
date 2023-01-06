@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\TransactionStatus\TransactionStatusRepositoryInterface;
 use App\Services\Utils\ResponseServiceInterface;
-use App\Http\Requests\TransactionStatus\TransactionStatusStoreRequest as StoreRequest;
-use App\Http\Requests\TransactionStatus\TransactionStatusUpdateRequest as UpdateRequest;
+use App\Http\Requests\TransactionStatus\TransactionStatusRequest as ModelRequest;
 
 class TransactionStatusController extends Controller
 {
@@ -18,7 +17,7 @@ class TransactionStatusController extends Controller
      */
     private $modelRepository;
     private $responseService;
-    private $name = 'Transaction Status';
+    private $name = 'TransactionStatus';
     
     public function __construct(
         TransactionStatusRepositoryInterface $modelRepository, 
@@ -40,7 +39,7 @@ class TransactionStatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRequest $request)
+    public function store(ModelRequest $request)
     {
         $result = $this->modelRepository->create($request->all());
         return $this->responseService->storeResponse($this->name, $result);
@@ -65,7 +64,7 @@ class TransactionStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ModelRequest $request, $id)
     {
         $result = $this->modelRepository->update($request->all(), $id);
         return $this->responseService->updateResponse($this->name, $result);
@@ -77,8 +76,15 @@ class TransactionStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function archive(string $id)
     {
-        //
+        $result = $this->modelRepository->delete($id);
+        return $this->responseService->successResponse($this->name, $result);
+    }
+
+    public function restore(string $id)
+    {
+        $result = $this->modelRepository->restore($id);
+        return $this->responseService->successResponse($this->name, $result);
     }
 }
