@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Unit\UnitController;
 
-Route::prefix('unit')->group(function() {
+Route::prefix('units')->group(function() {
     Route::get('/', [UnitController::class, 'index'])->name('unit.list');
     Route::get('/{unit}', [UnitController::class, 'show'])->name('unit.show');
     Route::post('/', [UnitController::class, 'store'])->name('unit.store');

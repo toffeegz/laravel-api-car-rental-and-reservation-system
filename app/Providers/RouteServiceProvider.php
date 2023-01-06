@@ -36,6 +36,9 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
 
+            // ADMINISTRATOR
+            // pending
+
             // BRANCH
             Route::middleware('api')
                 ->prefix('api')
@@ -43,16 +46,54 @@ class RouteServiceProvider extends ServiceProvider
 
             // BRAND
             Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api/brand/brand.php'));
+            ->prefix('api')
+            ->group(base_path('routes/api/brand/brand.php'));
 
+            // COMPANY INFORMATION
             Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api/transaction_status/transaction_status.php'));
+            ->prefix('api')
+            ->group(base_path('routes/api/company_information/company_information.php'));
 
+            // CUSTOMER
+            // pending
+
+            // INCLUSION
             Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api/unit/unit.php'));
+            ->prefix('api')
+            ->group(base_path('routes/api/inclusion/inclusion.php'));
+
+            // INCLUSION TYPE
+            Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api/inclusion_type/inclusion_type.php'));
+
+            // PROMOTIONAL POST
+            Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api/promotional_post/promotional_post.php'));
+
+            // RESERVATION
+            Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api/reservation/reservation.php'));
+
+            // ROLE
+            // pending
+
+            // TRANSACTION
+            Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api/transaction/transaction.php')); 
+
+            // TRANSACTION STATUS
+            Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api/transaction_status/transaction_status.php'));
+
+            // UNIT
+            Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api/unit/unit.php'));
         });
     }
 
