@@ -38,6 +38,17 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->filter($search)->orderBy($sortByColumn, $sortBy)->paginate(request('limit') ?? 10);
     }
 
+    // ARCHIVES
+    public function archive(array $search = [], array $relations = [], string $sortByColumn = 'created_at', string $sortBy = 'ASC')
+    {
+        $this->model = $this->model->onlyTrashed();
+        if($relations) {
+            $this->model = $this->model->with($relations);
+        }
+
+        return $this->model->filter($search)->orderBy($sortByColumn, $sortBy)->paginate(request('limit') ?? 10);
+    }
+
     protected function search($query, $params)
     {
         if ($params && isset($params['search'])) {
