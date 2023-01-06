@@ -27,8 +27,8 @@ class Reservation extends Model
         $query->when($filters['search'] ?? false, 
             function($query) use($search) {
                 $query->where(function($query) use($search) {
-                    $query->where('pickup_location', 'ilike', '%' . $search . '%')
-                        ->orWhere('destination', 'ilike', '%' . $search . '%');
+                    $query->where('pickup_location', 'like', '%' . $search . '%')
+                        ->orWhere('destination', 'like', '%' . $search . '%');
                 });
             }
         );

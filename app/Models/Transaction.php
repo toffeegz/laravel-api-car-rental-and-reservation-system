@@ -23,7 +23,7 @@ class Transaction extends Model
         $query->when($filters['search'] ?? false, 
             function($query) use($search) {
                 $query->where(function($query) use($search) {
-                    $query->where('description', 'ilike', '%' . $search . '%');
+                    $query->where('description', 'like', '%' . $search . '%');
                 });
             }
         );

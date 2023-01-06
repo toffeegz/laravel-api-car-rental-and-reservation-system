@@ -10,6 +10,9 @@ class Role extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const SUPERADMINISTRATOR = 1;
+    const ADMINISTRATOR = 2;
+
     protected $fillable = [
         'name',
         'slug',
@@ -22,9 +25,9 @@ class Role extends Model
         $query->when($filters['search'] ?? false, 
             function($query) use($search) {
                 $query->where(function($query) use($search) {
-                    $query->where('name', 'ilike', '%' . $search . '%')
-                        ->orWhere('slug', 'ilike', '%' . $search . '%')
-                        ->orWhere('description', 'ilike', '%' . $search . '%');
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('slug', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
                 });
             }
         );

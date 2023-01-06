@@ -26,9 +26,9 @@ class Inclusion extends Model
             ->when($filters['search'] ?? false, 
             function($query) use($search) {
                 $query->where(function($query) use($search) {
-                    $query->where('value', 'ilike', '%' . $search . '%')
-                        ->orWhere('units.model', 'ilike', '%' . $search . '%')
-                        ->orWhere('inclusion_types.name', 'ilike', '%' . $search . '%');
+                    $query->where('value', 'like', '%' . $search . '%')
+                        ->orWhere('units.model', 'like', '%' . $search . '%')
+                        ->orWhere('inclusion_types.name', 'like', '%' . $search . '%');
                 });
             }
         );

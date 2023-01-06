@@ -23,9 +23,9 @@ class InclusionType extends Model
         $query->when($filters['search'] ?? false, 
             function($query) use($search) {
                 $query->where(function($query) use($search) {
-                    $query->where('name', 'ilike', '%' . $search . '%')
-                        ->orWhere('default_value', 'ilike', '%' . $search . '%')
-                        ->orWhere('description', 'ilike', '%' . $search . '%');
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('default_value', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
                 });
             }
         );

@@ -25,12 +25,12 @@ class PromotionalPost extends Model
         $query->when($filters['search'] ?? false, 
             function($query) use($search) {
                 $query->where(function($query) use($search) {
-                    $query->where('name', 'ilike', '%' . $search . '%')
-                        ->orWhere('description', 'ilike', '%' . $search . '%')
-                        ->orWhere('photo_path', 'ilike', '%' . $search . '%')
-                        ->orWhere('start_date', 'ilike', '%' . $search . '%')
-                        ->orWhere('end_date', 'ilike', '%' . $search . '%')
-                        ->orWhere('visible', 'ilike', '%' . $search . '%');
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%')
+                        ->orWhere('photo_path', 'like', '%' . $search . '%')
+                        ->orWhere('start_date', 'like', '%' . $search . '%')
+                        ->orWhere('end_date', 'like', '%' . $search . '%')
+                        ->orWhere('visible', 'like', '%' . $search . '%');
                 });
             }
         );

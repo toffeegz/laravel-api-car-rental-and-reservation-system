@@ -31,11 +31,11 @@ class Unit extends Model
             ->when($filters['search'] ?? false, 
             function($query) use($search) {
                 $query->where(function($query) use($search) {
-                    $query->where('model', 'ilike', '%' . $search . '%')
-                        ->orWhere('description', 'ilike', '%' . $search . '%')
-                        ->orWhere('brands.name', 'ilike', '%' . $search . '%')
-                        ->orWhere('unit_classifications.name', 'ilike', '%' . $search . '%')
-                        ->orWhere('users.name', 'ilike', '%' . $search . '%');
+                    $query->where('model', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%')
+                        ->orWhere('brands.name', 'like', '%' . $search . '%')
+                        ->orWhere('unit_classifications.name', 'like', '%' . $search . '%')
+                        ->orWhere('users.name', 'like', '%' . $search . '%');
                 });
             }
         );
