@@ -37,7 +37,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
 
             // ADMINISTRATOR
-            // pending
+            Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api/administrator/administrator.php'));
 
             // BRANCH
             Route::middleware('api')
