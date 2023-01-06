@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TransactionStatus\TransactionStatusController;
 
-Route::prefix('transaction-status')->group(function() {
+Route::prefix('transaction-statuses')->group(function() {
     Route::get('/', [TransactionStatusController::class, 'index'])->name('transaction_status.list');
     Route::get('/{transaction_status}', [TransactionStatusController::class, 'show'])->name('transaction_status.show');
     Route::post('/', [TransactionStatusController::class, 'store'])->name('transaction_status.store');
