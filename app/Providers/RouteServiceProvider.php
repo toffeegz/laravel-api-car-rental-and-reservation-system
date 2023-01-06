@@ -36,9 +36,15 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
 
+            // BRANCH
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/api/branch/branch.php'));
+
+            // BRAND
+            Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api/brand/brand.php'));
 
             Route::middleware('api')
                 ->prefix('api')
