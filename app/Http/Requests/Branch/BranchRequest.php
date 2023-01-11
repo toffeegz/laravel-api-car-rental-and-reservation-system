@@ -25,7 +25,7 @@ class BranchRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', Rule::unique('branches', 'name')->ignore($this->name)],
+            'name' => ['required', Rule::unique('branches', 'name')->ignore($this->id)],
             'location' => ['required', 'min:6', 'max:255'],
             'description' => ['nullable', 'min:6', 'max:255'],
         ];
