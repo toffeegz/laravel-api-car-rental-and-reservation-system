@@ -186,8 +186,12 @@ class BaseRepository implements BaseRepositoryInterface
         DB::beginTransaction();
         try {
             $result = $this->model->findOrFail($id);
-            $hasRelation = $result->secureDelete($relations);
-            if($hasRelation == false) {
+
+            $hasRelation = false;
+            if(isset($relations)) {
+                $hasRelation = $result->secureDelete($relations);
+            }
+            if($hasRelation === false) {
                 $result->delete();
             }
             DB::commit();
