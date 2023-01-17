@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TransactionStatus\TransactionStatusController;
+use App\Http\Controllers\CompanyInformation\CompanyInformationController;
 
 Route::prefix('company-information')->group(function() {
-    Route::get('/', [TransactionStatusController::class, 'index'])->name('company_information.index');
-    Route::post('/', [TransactionStatusController::class, 'store'])->name('company_information.store');
+    Route::get('/', [CompanyInformationController::class, 'index'])->name('company_information.index');
+    Route::post('/', [CompanyInformationController::class, 'update'])->name('company_information.update');
 });

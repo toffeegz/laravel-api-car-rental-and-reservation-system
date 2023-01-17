@@ -31,61 +31,12 @@ class CompanyInformationController extends Controller
     public function index()
     {
         $result = $this->modelRepository->show(CompanyInformation::DEFAULT);
-        return $this->responseService->successResponse($this->name, $results);
+        return $this->responseService->successResponse($this->name, $result);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(ModelRequest $request)
+    public function update(ModelRequest $request)
     {
         $result = $this->modelRepository->update($request->all(), CompanyInformation::DEFAULT);
-        return $this->responseService->storeResponse($this->name, $result);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $result = $this->modelRepository->show($id);
-        return $this->responseService->successResponse($this->name, $result);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(ModelRequest $request, $id)
-    {
-        $result = $this->modelRepository->update($request->all(), $id);
         return $this->responseService->updateResponse($this->name, $result);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function archive(string $id)
-    {
-        $result = $this->modelRepository->delete($id);
-        return $this->responseService->successResponse($this->name, $result);
-    }
-
-    public function restore(string $id)
-    {
-        $result = $this->modelRepository->restore($id);
-        return $this->responseService->successResponse($this->name, $result);
     }
 }

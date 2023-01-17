@@ -25,7 +25,7 @@ class CompanyInformationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', Rule::unique('company_information', 'name')->ignore($this->name)],
+            'name' => ['required'],
             'address' => ['nullable', 'min:6', 'max:255'],
             'phone' => ['nullable', 'max:255'],
             'email' => ['nullable', 'email', 'max:255'],
