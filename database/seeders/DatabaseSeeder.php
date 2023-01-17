@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             BranchSeeder::class,
             BrandSeeder::class,
             CustomerSeeder::class,
+            InclusionTypeSeeder::class,
+            PromotionalPostSeeder::class
         ]);
     }
 }
