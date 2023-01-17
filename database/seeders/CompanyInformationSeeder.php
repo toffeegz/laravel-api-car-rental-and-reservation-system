@@ -18,7 +18,7 @@ class CompanyInformationSeeder extends Seeder
         CompanyInformation::truncate();
 
         CompanyInformation::updateOrCreate(['id' => CompanyInformation::DEFAULT],[
-            'name' => 'Car Rental Reservation System',
+            'name' => 'SelfDrive Philippines',
             'address' => 'Carmona, Cavite',
             'phone' => '(049) 123 4567',
             'email' => 'test@admin.com',
