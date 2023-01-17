@@ -29,7 +29,7 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     // LISTING
-    public function lists(array $search = [], array $relations = [], string $sortByColumn = 'created_at', string $sortBy = 'ASC')
+    public function lists(array $search = [], array $relations = [], string $sortByColumn = 'created_at', string $sortBy = 'DESC')
     {
         if($relations) {
             $this->model = $this->model->with($relations);
@@ -39,7 +39,7 @@ class BaseRepository implements BaseRepositoryInterface
     }
 
     // ARCHIVES
-    public function archive(array $search = [], array $relations = [], string $sortByColumn = 'created_at', string $sortBy = 'ASC')
+    public function archives(array $search = [], array $relations = [], string $sortByColumn = 'created_at', string $sortBy = 'DESC')
     {
         $this->model = $this->model->onlyTrashed();
         if($relations) {
