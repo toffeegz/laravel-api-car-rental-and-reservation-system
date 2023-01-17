@@ -27,10 +27,8 @@ class PromotionalPost extends Model
                 $query->where(function($query) use($search) {
                     $query->where('name', 'like', '%' . $search . '%')
                         ->orWhere('description', 'like', '%' . $search . '%')
-                        ->orWhere('photo_path', 'like', '%' . $search . '%')
                         ->orWhere('start_date', 'like', '%' . $search . '%')
-                        ->orWhere('end_date', 'like', '%' . $search . '%')
-                        ->orWhere('visible', 'like', '%' . $search . '%');
+                        ->orWhere('end_date', 'like', '%' . $search . '%');
                 });
             }
         );
