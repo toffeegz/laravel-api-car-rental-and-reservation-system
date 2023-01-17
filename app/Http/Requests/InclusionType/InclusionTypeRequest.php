@@ -25,7 +25,7 @@ class InclusionTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', Rule::unique('inclusion_types', 'name')->ignore($this->name)],
+            'name' => ['required', Rule::unique('inclusion_types', 'name')->ignore($this->id)],
             'default_value' => ['required', 'min:1', 'max:255'],
             'description' => ['nullable', 'min:3', 'max:255'],
             'icon_path' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
