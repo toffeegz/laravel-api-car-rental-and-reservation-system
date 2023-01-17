@@ -33,6 +33,12 @@ class BranchController extends Controller
         return $this->responseService->successResponse($this->name, $results);
     }
 
+    public function archives()
+    {
+        $results = $this->modelRepository->archives(request(['search']));
+        return $this->responseService->successResponse($this->name, $results);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -76,7 +82,7 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function archive(string $id)
+    public function delete(string $id)
     {
         $result = $this->modelRepository->delete($id);
         return $this->responseService->successResponse($this->name, $result);
