@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Brand;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Brand\BrandRepositoryInterface;
-use App\Services\Utils\ResponseServiceInterface;
+use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\Brand\BrandRequest as ModelRequest;
 
 class BrandController extends Controller

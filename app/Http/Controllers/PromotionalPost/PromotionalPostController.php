@@ -5,7 +5,7 @@ namespace App\Http\Controllers\PromotionalPost;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\PromotionalPost\PromotionalPostRepositoryInterface;
-use App\Services\Utils\ResponseServiceInterface;
+use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\PromotionalPost\PromotionalPostRequest as ModelRequest;
 
 class PromotionalPostController extends Controller

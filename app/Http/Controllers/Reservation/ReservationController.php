@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Reservation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Reservation\ReservationRepositoryInterface;
-use App\Services\Utils\ResponseServiceInterface;
+use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\Reservation\ReservationRequest as ModelRequest;
 
 class ReservationController extends Controller

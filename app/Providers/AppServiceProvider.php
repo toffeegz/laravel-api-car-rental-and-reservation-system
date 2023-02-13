@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Utils\ResponseService;
-use App\Services\Utils\ResponseServiceInterface;
+use App\Services\Utils\Response\ResponseService;
+use App\Services\Utils\Response\ResponseServiceInterface;
 
 use App\Services\Unit\UnitService;
 use App\Services\Unit\UnitServiceInterface;

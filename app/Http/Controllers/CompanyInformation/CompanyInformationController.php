@@ -5,7 +5,7 @@ namespace App\Http\Controllers\CompanyInformation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\CompanyInformation\CompanyInformationRepositoryInterface;
-use App\Services\Utils\ResponseServiceInterface;
+use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\CompanyInformation\CompanyInformationRequest as ModelRequest;
 use App\Models\CompanyInformation;
 

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Unit\UnitRepositoryInterface;
 use App\Services\Unit\UnitServiceInterface;
-use App\Services\Utils\ResponseServiceInterface;
+use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\Unit\UnitRequest as ModelRequest;
 
 class UnitController extends Controller

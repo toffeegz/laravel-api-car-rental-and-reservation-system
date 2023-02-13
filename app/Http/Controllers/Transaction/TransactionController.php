@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Transaction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Transaction\TransactionRepositoryInterface;
-use App\Services\Utils\ResponseServiceInterface;
+use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\Transaction\TransactionRequest as ModelRequest;
 
 class TransactionController extends Controller

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\InclusionType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\InclusionType\InclusionTypeRepositoryInterface;
-use App\Services\Utils\ResponseServiceInterface;
+use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\InclusionType\InclusionTypeRequest as ModelRequest;
 
 class InclusionTypeController extends Controller

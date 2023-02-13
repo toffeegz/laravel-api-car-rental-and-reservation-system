@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Branch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Branch\BranchRepositoryInterface;
-use App\Services\Utils\ResponseServiceInterface;
+use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\Branch\BranchRequest as ModelRequest;
 
 class BranchController extends Controller
