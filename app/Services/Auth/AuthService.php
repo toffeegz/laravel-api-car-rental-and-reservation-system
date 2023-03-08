@@ -142,6 +142,7 @@ class AuthService implements AuthServiceInterface
                 }
             
                 $user->email_verified_at = now();
+                $user->is_active = true;
                 $user->save();
             
                 $verification->delete();

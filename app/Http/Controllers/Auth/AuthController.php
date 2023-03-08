@@ -64,12 +64,7 @@ class AuthController extends Controller
 
     public function handleProviderCallback()
     {
-        // try {
-        //     $google_user = Socialite::driver('google')->user();
-        // } catch (InvalidStateException $e) {
-            $google_user = Socialite::driver('google')->stateless()->user();
-        // }
-        
+        $google_user = Socialite::driver('google')->stateless()->user();
 
         $user = $this->modelRepository->getByEmail($google_user->email);
         //register 
@@ -87,7 +82,6 @@ class AuthController extends Controller
         $token = $user->createToken(config('app.name'), ['server:update']);
 
         $url = config('selfdriveph.frontend_url') . 'api/login/google/?token=' . $token->plainTextToken . '&user=' . $user;
-        Log::info($url);
         return Redirect::to($url);
     }
 
