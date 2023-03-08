@@ -11,6 +11,8 @@ use App\Repositories\Brand\BrandRepository;
 use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\CompanyInformation\CompanyInformationRepository;
 use App\Repositories\CompanyInformation\CompanyInformationRepositoryInterface;
+use App\Repositories\Customer\CustomerRepository;
+use App\Repositories\Customer\CustomerRepositoryInterface;
 use App\Repositories\Inclusion\InclusionRepository;
 use App\Repositories\Inclusion\InclusionRepositoryInterface;
 use App\Repositories\InclusionType\InclusionTypeRepository;
@@ -25,6 +27,8 @@ use App\Repositories\TransactionStatus\TransactionStatusRepository;
 use App\Repositories\TransactionStatus\TransactionStatusRepositoryInterface;
 use App\Repositories\Unit\UnitRepository;
 use App\Repositories\Unit\UnitRepositoryInterface;
+use App\Repositories\UnitClassification\UnitClassificationRepository;
+use App\Repositories\UnitClassification\UnitClassificationRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 
@@ -41,6 +45,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BranchRepositoryInterface::class, BranchRepository::class);
         $this->app->bind(BrandRepositoryInterface::class, BrandRepository::class);
         $this->app->bind(CompanyInformationRepositoryInterface::class, CompanyInformationRepository::class);
+        $this->app->bind(CustomerRepositoryInterface::class, CustomerRepository::class);
         $this->app->bind(InclusionRepositoryInterface::class, InclusionRepository::class);
         $this->app->bind(InclusionTypeRepositoryInterface::class, InclusionTypeRepository::class);
         $this->app->bind(PromotionalPostRepositoryInterface::class, PromotionalPostRepository::class);
@@ -48,6 +53,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
         $this->app->bind(TransactionStatusRepositoryInterface::class, TransactionStatusRepository::class);
         $this->app->bind(UnitRepositoryInterface::class, UnitRepository::class);
+        $this->app->bind(UnitClassificationRepositoryInterface::class, UnitClassificationRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
