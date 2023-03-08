@@ -45,7 +45,7 @@ class UnitController extends Controller
      */
     public function store(ModelRequest $request)
     {
-        $result = $this->modelService->store($request->all());
+        $result = $this->modelService->store($request->all(), $request->file('image'));
         return $this->responseService->storeResponse($this->name, $result);
     }
 

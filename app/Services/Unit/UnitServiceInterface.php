@@ -6,5 +6,5 @@ use App\Repositories\Inclusion\InclusionRepositoryInterface;
 
 interface UnitServiceInterface
 {
-    public function store(array $attributes);
+    public function store(array $attributes, $unit_image);
 }
