@@ -16,14 +16,15 @@ class DatabaseSeeder extends Seeder
     {
         // 
         $this->call([
-            CompanyInformationSeeder::class,
-            RoleSeeder::class,
-            AdministratorSeeder::class,
             BranchSeeder::class,
             BrandSeeder::class,
-            CustomerSeeder::class,
+            CompanyInformationSeeder::class,
             InclusionTypeSeeder::class,
-            PromotionalPostSeeder::class
+            PromotionalPostSeeder::class,
+            RoleSeeder::class,
+            TransactionStatusSeeder::class,
+            UnitClassificationSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

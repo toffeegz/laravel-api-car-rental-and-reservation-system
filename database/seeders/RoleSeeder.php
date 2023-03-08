@@ -18,14 +18,14 @@ class RoleSeeder extends Seeder
         Role::truncate();
 
         Role::create([
-            'id' => 1,
+            'id' => Role::SUPERADMINISTRATOR,
             'name' => 'Super Administrator',
             'slug' => 'super-administrator',
             'description' => 'Admin of all'
         ]);
 
         Role::create([
-            'id' => 2,
+            'id' => Role::ADMINISTRATOR,
             'name' => 'Administrator',
             'slug' => 'administrator',
             'description' => 'Admin supposedly for each branch'

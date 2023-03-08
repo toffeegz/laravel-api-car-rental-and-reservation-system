@@ -39,6 +39,11 @@ class RouteServiceProvider extends ServiceProvider
             // ADMINISTRATOR
             Route::middleware('api')
                 ->prefix('api')
+                ->group(base_path('routes/api/auth/auth.php'));
+
+            // ADMINISTRATOR
+            Route::middleware('api')
+                ->prefix('api')
                 ->group(base_path('routes/api/administrator/administrator.php'));
 
             // BRANCH
@@ -82,7 +87,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/api/reservation/reservation.php'));
 
             // ROLE
-            // pending
+            // NO MODIFICATION OF ROLES
 
             // TRANSACTION
             Route::middleware('api')
@@ -98,6 +103,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('api')
             ->prefix('api')
             ->group(base_path('routes/api/unit/unit.php'));
+
+            // UNIT CLASSIFICATION
+            Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api/unit_classification/unit_classification.php'));
         });
     }
 

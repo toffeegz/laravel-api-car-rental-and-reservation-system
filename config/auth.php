@@ -95,6 +95,10 @@ return [
         ],
     ],
 
+    'verification' => [
+        'expire' => 120, // tokens expire after 120 minutes (2 hours)
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout
