@@ -16,6 +16,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\Verification; 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Auth\VerifyEmail;
+use App\Mail\Auth\ForgotPasswordEmail;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AuthService implements AuthServiceInterface
@@ -151,6 +152,60 @@ class AuthService implements AuthServiceInterface
             }
         } catch (ModelNotFoundException $e) {
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('Verification token not found');
+        }
+    }
+
+    public function forgotPassword(string $email)
+    {
+        try 
+        {
+            $user = $this->modelRepository->getByEmail($email);
+            if($user) {
+                if($user->email_verified_at === null) {
+                    throw new AuthorizationException('Account not verified');
+                } else {
+                    $token = Str::random(64);
+                    $hashedToken = Hash::make($token);
+                    $user->verification_token = $hashedToken;
+                    $user->save();
+
+                    // Create a new verification record
+                    $verification = new Verification([
+                        'user_id' => $user->id,
+                        'token' => $token,
+                    ]);
+                    $verification->save();
+
+                    // Send a verification email to the user
+                    Mail::to($user->email)->send(new ForgotPasswordEmail($user, $token));
+                }
+            }
+        } catch (\Exception $exception) {
+            throw ValidationException::withMessages([$exception->getMessage()]);
+        }
+    }
+
+    public function changePassword(array $attributes)
+    {
+        try 
+        {
+            $user = $this->modelRepository->getByToken(Hash::make($attributes['token']));
+            if($user) {
+                $verification = Verification::where('user_id', $user->id)->where('token', $attributes['token'])->get();
+                if($verification->count() === 0) {
+                    throw new AuthorizationException('Token not valid');
+                } else {
+                    $password = Hash::make($attributes['password']);
+                    $user->password = $password;
+                    $user->save();
+                    $verification->delete();
+                    return $user;
+                }
+            } else {
+                throw new AuthenticationException('Invalid credentials');
+            }
+        } catch (\Exception $exception) {
+            throw ValidationException::withMessages([$exception->getMessage()]);
         }
     }
 }
