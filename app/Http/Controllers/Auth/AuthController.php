@@ -19,7 +19,9 @@ use App\Services\Auth\AuthServiceInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\Auth\RegisterCustomerRequest;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -97,15 +99,15 @@ class AuthController extends Controller
         return $this->responseService->resolveResponse("Logout Successful", null);
     }
 
-    public function resetPassword(SendResetPasswordRequest $request)
+    public function forgotPassword(ForgotPasswordRequest $request)
     {
-        // $result = $this->authService->sendResetPassword($request->email, "true");
-        // return $this->responseService->storeResponse("Code", $result);
+        $result = $this->modelService->forgotPassword($request->email);
+        return $this->responseService->resolveResponse("An email has been sent to your email address with instructions on how to reset your password.", $result);
     }
 
-    public function updateProfile(Request $request)
+    public function changePassword(ChangePasswordRequest $request)
     {
-        // $result = $this->authService->resetPassword($request->get('code'));
-        // return $this->responseService->successResponse("Reset Password", $result);
+        $result = $this->modelService->changePassword($request->all());
+        return $this->responseService->resolveResponse("Your password has been updated successfully!", $result);
     }
 }

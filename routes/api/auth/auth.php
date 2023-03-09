@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\AuthController;
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verify');
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot_password');
+Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change_password');
 // Route::post('/auth/send-reset-password', [AuthController::class, 'sendResetPassword'])->name('auth.sendPasswordReset');
 
 Route::get('login/google', [AuthController::class, 'redirectToProvider'])->name('google.login')->middleware('web');

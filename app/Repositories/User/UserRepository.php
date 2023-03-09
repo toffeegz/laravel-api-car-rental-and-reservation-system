@@ -48,4 +48,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $this->model->where('email', $email)->first();
     }
+
+    public function getByToken(string $token)
+    {
+        return $this->model->where('verification_token', $token)->first();
+    }
 }
