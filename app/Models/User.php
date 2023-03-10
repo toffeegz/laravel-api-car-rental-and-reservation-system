@@ -27,8 +27,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'email_verified_at',
-        'remember_token',
-        'verification_token'
+        'remember_token'
     ];
 
     public function scopeFilter($query, array $filters)
