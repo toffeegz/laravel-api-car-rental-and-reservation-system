@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
+            $table->string('contact_no')->nullable();
             $table->string('google_id')->unique()->nullable();
             $table->unsignedBigInteger('role_id')->nullable()->comment('null-CUSTOMER/1-SUPERADMIN/2-ADMIN');
             $table->unsignedBigInteger('branch_id')->nullable();
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->boolean('is_active')->default(true);
+            $table->bigInteger('verified_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
