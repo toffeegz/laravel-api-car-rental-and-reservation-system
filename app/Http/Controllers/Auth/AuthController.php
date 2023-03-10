@@ -79,6 +79,14 @@ class AuthController extends Controller
                 'is_active' => true
             ];
             $user = $this->modelService->register($attributes, $google_user->getAvatar(), true, '');
+        } else {
+            if($user->google_id === null) {
+                $user->google_id = $google_user->id;
+                if($user->email_verified_at === null) {
+                    $user->email_verified_at = Carbon::now();
+                }
+                $user->save();
+            }
         }
 
         $token = $user->createToken(config('app.name'), ['server:update']);
@@ -110,4 +118,7 @@ class AuthController extends Controller
         $result = $this->modelService->changePassword($request->all());
         return $this->responseService->resolveResponse("Your password has been updated successfully!", $result);
     }
+
+    //     updateProfile
+    // verifyId
 }
