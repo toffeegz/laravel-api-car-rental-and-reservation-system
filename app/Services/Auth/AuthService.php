@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Auth\VerifyEmail;
 use App\Mail\Auth\ForgotPasswordEmail;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 
 class AuthService implements AuthServiceInterface
 {
@@ -92,18 +95,17 @@ class AuthService implements AuthServiceInterface
                 if($user && $is_google_auth === false) {
                     $token = Str::random(64);
                     $hashedToken = Hash::make($token);
-                    $user->verification_token = $hashedToken;
-                    $user->save();
 
                     // Create a new verification record
                     $verification = new Verification([
                         'user_id' => $user->id,
-                        'token' => $token,
+                        'token' => $hashedToken,
+                        'type' => 'register'
                     ]);
                     $verification->save();
 
                     // Send a verification email to the user
-                    Mail::to($user->email)->send(new VerifyEmail($user, $token));
+                    Mail::to($user->email)->send(new VerifyEmail($user, $hashedToken));
 
                 }
 
@@ -128,27 +130,36 @@ class AuthService implements AuthServiceInterface
     public function verifyEmail(string $token)
     {
         try {
-            $verification = Verification::where('token', $token)->firstOrFail();
-            $user = $this->modelRepository->show($verification->user_id);
-            if(!$verification) {
-
-            }
-            if (Hash::check($token, $user->verification_token)) {
-                if ($verification->isExpired()) {
-                    throw new AuthorizationException('Verification token has expired');
+            $verification = Verification::where('token', $token)
+            ->where('type', 'register')
+            ->firstOrFail();
+            if($verification) {
+                $user = $this->modelRepository->show($verification->user_id);
+                if($user)
+                {
+                    if ($verification->isExpired()) {
+                        $response = new JsonResponse(['message' => 'Verification token has expired'], 419);
+                        throw new HttpResponseException($response);
+                    }
+                
+                    if ($user->email_verified_at) {
+                        $response = new JsonResponse(['message' => 'Email is already verified'], 400);
+                        throw new HttpResponseException($response);
+                    }
+                
+                    $user->email_verified_at = now();
+                    $user->is_active = true;
+                    $user->save();
+                
+                    try {
+                        $verification->delete();
+                    } catch (\Exception $e) {
+                        // Log the error or output a message to the user
+                        throw new \Exception('Unable to delete verification record: '.$e->getMessage());
+                    }
+                
+                    return $user;
                 }
-            
-                if ($user->email_verified_at) {
-                    return response(['message' => 'Email is already verified.'], 200);
-                }
-            
-                $user->email_verified_at = now();
-                $user->is_active = true;
-                $user->save();
-            
-                $verification->delete();
-            
-                return response()->json(['message' => 'Your email has been successfully verified.']);
             }
         } catch (ModelNotFoundException $e) {
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('Verification token not found');
@@ -164,15 +175,13 @@ class AuthService implements AuthServiceInterface
                 if($user->email_verified_at === null) {
                     throw new AuthorizationException('Account not verified');
                 } else {
-                    $token = Str::random(64);
-                    $hashedToken = Hash::make($token);
-                    $user->verification_token = $hashedToken;
-                    $user->save();
+                    $token = Hash::make(Str::random(64));
 
                     // Create a new verification record
                     $verification = new Verification([
                         'user_id' => $user->id,
                         'token' => $token,
+                        'type' => 'forgot_password',
                     ]);
                     $verification->save();
 
@@ -187,25 +196,24 @@ class AuthService implements AuthServiceInterface
 
     public function changePassword(array $attributes)
     {
-        try 
-        {
-            $user = $this->modelRepository->getByToken(Hash::make($attributes['token']));
-            if($user) {
-                $verification = Verification::where('user_id', $user->id)->where('token', $attributes['token'])->get();
-                if($verification->count() === 0) {
-                    throw new AuthorizationException('Token not valid');
-                } else {
+        try {
+            $verification = Verification::where('token', $attributes['token'])
+                ->where('type', 'forgot_password')
+                ->firstOrFail();
+
+            if($verification) {
+                $user = $this->modelRepository->show($verification->user_id);
+
+                if ($user) {
                     $password = Hash::make($attributes['password']);
                     $user->password = $password;
                     $user->save();
                     $verification->delete();
                     return $user;
-                }
-            } else {
-                throw new AuthenticationException('Invalid credentials');
+                } 
             }
-        } catch (\Exception $exception) {
-            throw ValidationException::withMessages([$exception->getMessage()]);
+        } catch (ModelNotFoundException $e) {
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('Verification token not found');
         }
     }
 }

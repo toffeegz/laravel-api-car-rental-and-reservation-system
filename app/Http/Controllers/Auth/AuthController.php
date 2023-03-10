@@ -56,7 +56,7 @@ class AuthController extends Controller
     public function verifyEmail($token)
     {
         $result = $this->modelService->verifyEmail($token);
-        return $this->responseService->resolveResponse("Verify Successful", $result);
+        return $this->responseService->resolveResponse("Your email has been successfully verified.", $result);
     }
 
     public function redirectToProvider()
