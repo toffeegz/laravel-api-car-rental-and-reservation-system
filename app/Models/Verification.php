@@ -11,7 +11,8 @@ class Verification extends Model
 
     protected $fillable = [
         'user_id',
-        'token'
+        'token',
+        'type'
     ];
 
     public function isExpired()
