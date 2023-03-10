@@ -13,6 +13,8 @@ use Session;
 use Illuminate\Support\Carbon;
 use File; 
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+use Laravel\Sanctum\HasApiTokens;
 
 use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Services\Auth\AuthServiceInterface;
@@ -22,8 +24,9 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\ChangePasswordRequest;
-use Illuminate\Support\Facades\Log;
-use Laravel\Sanctum\HasApiTokens;
+use App\Http\Requests\Auth\UpdateProfileRequest;
+use App\Http\Requests\Auth\VerifyIdRequest;
+
 
 class AuthController extends Controller
 {
@@ -84,6 +87,7 @@ class AuthController extends Controller
                 $user->google_id = $google_user->id;
                 if($user->email_verified_at === null) {
                     $user->email_verified_at = Carbon::now();
+                    $user->is_active = true;
                 }
                 $user->save();
             }
@@ -119,6 +123,33 @@ class AuthController extends Controller
         return $this->responseService->resolveResponse("Your password has been updated successfully!", $result);
     }
 
-    //     updateProfile
-    // verifyId
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        if ($request->hasFile('profile_photo')) {
+            $file = $request->file('profile_photo');
+        } else {
+            $file = null;
+        }
+
+        $result = $this->modelService->updateProfile($request->all(), $file);
+        return $this->responseService->resolveResponse("Your profile has been updated successfully!", $result);
+    }
+
+    public function verifyId(VerifyIdRequest $request)
+    {
+        $files = [];
+        $ids = $request->input('ids', []);
+
+        foreach ($ids as $id) {
+            $idType = $id['id_type'];
+            $frontImage = $request->file('ids.' . $idType . '.front_image');
+            $backImage = $request->file('ids.' . $idType . '.back_image');
+            $files[$idType] = [
+                'front_image' => $frontImage,
+                'back_image' => $backImage,
+            ];
+        }
+        $result = $this->modelService->verifyId($request->all(), Auth::user()->id(), $files);
+        return $this->responseService->resolveResponse("Your profile has been updated successfully!", $result);
+    }
 }

@@ -216,4 +216,47 @@ class AuthService implements AuthServiceInterface
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('Verification token not found');
         }
     }
+
+    public function updateProfile(array $attributes, $profile_photo)
+    {
+        if(Auth::check()) {
+            $user = Auth::user();
+            if(isset($attributes['password'])) {
+                if(Hash::check($attributes['current_password'], $user->password)) {
+                    $attributes['password'] = Hash::make($attributes['password']);
+                } else {
+                    $response = new JsonResponse(['message' => 'Current password is incorrect'], 400);
+                    throw new HttpResponseException($response);
+                }
+            }
+
+            // user ID is verified cannot change name
+            if($user->validid_verified_at != null && isset($attributes['name'])) {
+                unset($attributes['name']);
+                $response = new JsonResponse(['message' => 'Your ID has been verified, you are not allowed to change your name'], 403);
+                throw new HttpResponseException($response);
+            }
+
+            if($profile_photo) {
+                // upload profile photo
+                $file_name = $user->id;
+                $photo_path = $this->fileService->upload($this->folderName, $file_name, $profile_photo);
+                $attributes['profile_photo_path'] = $photo_path;
+            }
+
+            // email cannot be change
+            if(isset($attributes['email'])) {
+                unset($attributes['email']);
+            }
+
+            return $this->modelRepository->update($attributes, $user->id);
+        }
+    }
+
+    public function verifyId(array $attributes, $user_id, $ids)
+    {
+        foreach($ids as $id) {
+            
+        }
+    }
 }
