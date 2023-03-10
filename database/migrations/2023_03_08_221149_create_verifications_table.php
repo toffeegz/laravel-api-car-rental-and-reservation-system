@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('token');
             $table->bigInteger('user_id');
+            $table->string('type');
             $table->timestamps();
         });
     }
