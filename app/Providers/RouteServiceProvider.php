@@ -76,6 +76,11 @@ class RouteServiceProvider extends ServiceProvider
             ->prefix('api')
             ->group(base_path('routes/api/inclusion_type/inclusion_type.php'));
 
+            // OPTION
+            Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api/option/option.php'));
+
             // PROMOTIONAL POST
             Route::middleware('api')
             ->prefix('api')

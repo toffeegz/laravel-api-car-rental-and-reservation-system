@@ -11,6 +11,22 @@ return [
     |
     */
 
-    'frontend_url' => 'localhost:8000/',
+    'frontend_url' => 'localhost:8080/',
+
+
+    // OPTIONS
+
+    'list_valid_ids' => [
+        "Philippine Passport",
+        "Driver's License (issued by the Land Transportation Office)",
+        "Unified Multi-Purpose ID (UMID)",
+        "Professional Regulation Commission (PRC) ID",
+        "Voter's ID",
+        "Postal ID",
+        "National Bureau of Investigation (NBI) Clearance",
+        "Police Clearance",
+        "Barangay Certification",
+        "Senior Citizen ID"
+    ],
 
 ];
