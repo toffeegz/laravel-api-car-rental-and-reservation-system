@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'frontend_url' => 'localhost:8080/',
+    'frontend_url' => 'localhost:3000/',
 
 
     // OPTIONS
