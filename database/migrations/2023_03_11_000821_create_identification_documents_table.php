@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('front_image_path');
             $table->string('back_image_path')->nullable();
             $table->datetime('verified_at')->nullable();
-            $table->bigInteger('verified_by')->nullable();
+            $table->unsignedBigInteger('verified_by')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
