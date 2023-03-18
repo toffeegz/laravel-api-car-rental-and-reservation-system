@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use App\Exceptions\CustomExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends CustomExceptionHandler
 {
@@ -48,4 +50,15 @@ class Handler extends CustomExceptionHandler
             //
         });
     }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+
+        // Customize the response for non-JSON requests here
+        throw new UnauthorizedHttpException('Bearer', 'Unauthenticated.', $exception);
+    }
+    
 }
