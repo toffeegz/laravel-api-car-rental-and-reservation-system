@@ -17,7 +17,7 @@ class CustomerController extends Controller
      */
     private $modelRepository;
     private $responseService;
-    private $name = 'Customer';
+    private $name = 'User';
     
     public function __construct(
         UserRepositoryInterface $modelRepository, 
@@ -29,13 +29,13 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $results = $this->modelRepository->userLists($is_customer = true, request(['search']), ['customer']);
+        $results = $this->modelRepository->userLists($is_customer = true, request(['search']));
         return $this->responseService->successResponse($this->name, $results);
     }
 
     public function archive()
     {
-        $results = $this->modelRepository->userArchive($is_customer = true, request(['search']), ['customer']);
+        $results = $this->modelRepository->userArchive($is_customer = true, request(['search']));
         return $this->responseService->successResponse($this->name, $results);
     }
 
