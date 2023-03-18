@@ -32,7 +32,7 @@ class UnitService implements UnitServiceInterface
     {
         try {
             $file_name = Carbon::now()->format('dmYHis');
-            $photo_path = $this->fileService->upload($this->folderName, $file_name, $unit_image);
+            $photo_path = $this->fileService->uploadAndGetUrl($this->folderName, $file_name, $unit_image);
             $attributes['photo_path'] = $photo_path;
             $unit_result = $this->modelRepository->create($attributes);
             if($unit_result && isset($attributes['inclusions'])) {
