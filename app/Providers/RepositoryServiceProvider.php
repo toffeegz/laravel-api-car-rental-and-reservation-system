@@ -13,6 +13,8 @@ use App\Repositories\CompanyInformation\CompanyInformationRepository;
 use App\Repositories\CompanyInformation\CompanyInformationRepositoryInterface;
 use App\Repositories\Customer\CustomerRepository;
 use App\Repositories\Customer\CustomerRepositoryInterface;
+use App\Repositories\IdentificationDocument\IdentificationDocumentRepository;
+use App\Repositories\IdentificationDocument\IdentificationDocumentRepositoryInterface;
 use App\Repositories\Inclusion\InclusionRepository;
 use App\Repositories\Inclusion\InclusionRepositoryInterface;
 use App\Repositories\InclusionType\InclusionTypeRepository;
@@ -46,6 +48,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BrandRepositoryInterface::class, BrandRepository::class);
         $this->app->bind(CompanyInformationRepositoryInterface::class, CompanyInformationRepository::class);
         $this->app->bind(CustomerRepositoryInterface::class, CustomerRepository::class);
+        $this->app->bind(IdentificationDocumentRepositoryInterface::class, IdentificationDocumentRepository::class);
         $this->app->bind(InclusionRepositoryInterface::class, InclusionRepository::class);
         $this->app->bind(InclusionTypeRepositoryInterface::class, InclusionTypeRepository::class);
         $this->app->bind(PromotionalPostRepositoryInterface::class, PromotionalPostRepository::class);

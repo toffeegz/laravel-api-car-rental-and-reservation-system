@@ -5,6 +5,7 @@ namespace App\Services\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Customer\CustomerRepositoryInterface;
+use App\Repositories\IdentificationDocument\IdentificationDocumentRepositoryInterface;
 use App\Services\Utils\File\FileServiceInterface;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
@@ -26,17 +27,22 @@ class AuthService implements AuthServiceInterface
 {
     private UserRepositoryInterface $modelRepository;
     private CustomerRepositoryInterface $customerRepository;
+    private IdentificationDocumentRepositoryInterface $identificationDocumentRepository;
     private FileServiceInterface $fileService;
     private $folderName;
+    private $folderNameIds;
 
     public function __construct(
         UserRepositoryInterface $modelRepository,
         CustomerRepositoryInterface $customerRepository,
+        IdentificationDocumentRepositoryInterface $identificationDocumentRepository,
         FileServiceInterface $fileService,
     ) {
         $this->modelRepository = $modelRepository;
+        $this->identificationDocumentRepository = $identificationDocumentRepository;
         $this->fileService = $fileService;
         $this->folderName = 'users';
+        $this->folderNameIds = 'identification_documents';
     }
 
     public function login(string $email, string $password, bool $is_google_auth)
@@ -168,29 +174,24 @@ class AuthService implements AuthServiceInterface
 
     public function forgotPassword(string $email)
     {
-        try 
-        {
-            $user = $this->modelRepository->getByEmail($email);
-            if($user) {
-                if($user->email_verified_at === null) {
-                    throw new AuthorizationException('Account not verified');
-                } else {
-                    $token = Hash::make(Str::random(64));
+        $user = $this->modelRepository->getByEmail($email);
+        if($user) {
+            if($user->email_verified_at === null) {
+                throw new AuthorizationException('Account not verified');
+            } else {
+                $token = Hash::make(Str::random(64));
 
-                    // Create a new verification record
-                    $verification = new Verification([
-                        'user_id' => $user->id,
-                        'token' => $token,
-                        'type' => 'forgot_password',
-                    ]);
-                    $verification->save();
+                // Create a new verification record
+                $verification = new Verification([
+                    'user_id' => $user->id,
+                    'token' => $token,
+                    'type' => 'forgot_password',
+                ]);
+                $verification->save();
 
-                    // Send a verification email to the user
-                    Mail::to($user->email)->send(new ForgotPasswordEmail($user, $token));
-                }
+                // Send a verification email to the user
+                Mail::to($user->email)->send(new ForgotPasswordEmail($user, $token));
             }
-        } catch (\Exception $exception) {
-            throw ValidationException::withMessages([$exception->getMessage()]);
         }
     }
 
@@ -255,8 +256,13 @@ class AuthService implements AuthServiceInterface
 
     public function verifyId(array $attributes, $user_id, $ids)
     {
-        foreach($ids as $id) {
-            
+        try {
+            $attributes['front_image_path'] = $this->fileService->uploadAndGetUrl($this->folderNameIds, $user_id . '_FRONT', $ids['front_image']);
+            $attributes['back_image_path'] = $this->fileService->uploadAndGetUrl($this->folderNameIds, $user_id . '_BACK', $ids['back_image']);
+            $result = $this->identificationDocumentRepository->create($attributes);
+            return $result;
+        } catch (\Exception $exception) {
+            throw ValidationException::withMessages([$exception->getMessage()]);
         }
     }
 }
