@@ -36,14 +36,14 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
 
-            // ADMINISTRATOR
+            // AUTH
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/api/auth/auth.php'));
 
             // ADMINISTRATOR
-            Route::middleware('api')
-                ->prefix('api')
+            Route::prefix('api')
+                ->middleware(['api', 'auth:sanctum'])
                 ->group(base_path('routes/api/administrator/administrator.php'));
 
             // BRANCH
@@ -62,8 +62,8 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/api/company_information/company_information.php'));
 
             // CUSTOMER
-            Route::middleware('api')
-                ->prefix('api')
+            Route::prefix('api')
+                ->middleware(['api', 'auth:sanctum'])
                 ->group(base_path('routes/api/customer/customer.php'));
 
             // INCLUSION
