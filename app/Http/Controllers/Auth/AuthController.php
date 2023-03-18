@@ -137,19 +137,11 @@ class AuthController extends Controller
 
     public function verifyId(VerifyIdRequest $request)
     {
-        $files = [];
-        $ids = $request->input('ids', []);
-
-        foreach ($ids as $id) {
-            $idType = $id['id_type'];
-            $frontImage = $request->file('ids.' . $idType . '.front_image');
-            $backImage = $request->file('ids.' . $idType . '.back_image');
-            $files[$idType] = [
-                'front_image' => $frontImage,
-                'back_image' => $backImage,
-            ];
-        }
-        $result = $this->modelService->verifyId($request->all(), Auth::user()->id(), $files);
-        return $this->responseService->resolveResponse("Your profile has been updated successfully!", $result);
+        $files = [
+            'front_image' => $request->file('front_image'),
+            'back_image' => $request->file('back_image'),
+        ];
+        $result = $this->modelService->verifyId($request->all(), Auth::user()->id, $files);
+        return $this->responseService->successResponse("Your ID documents have been submitted for verification!", $result);
     }
 }
