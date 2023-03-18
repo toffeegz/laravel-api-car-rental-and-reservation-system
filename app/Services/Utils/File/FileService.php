@@ -27,4 +27,11 @@ class FileService implements FileServiceInterface
         $result = Storage::disk('s3')->putFileAs($folderName, $file, $fileName);
         return $result;
     }
+
+    public function uploadAndGetUrl($folderName, $fileName, $file)
+    {
+        $result = $this->upload($folderName, $fileName, $file);
+        $url = Storage::disk('s3')->url($result);
+        return $url;
+    }
 }
