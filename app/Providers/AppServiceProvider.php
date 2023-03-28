@@ -12,6 +12,8 @@ use App\Services\Auth\AuthService;
 use App\Services\Auth\AuthServiceInterface;
 use App\Services\Unit\UnitService;
 use App\Services\Unit\UnitServiceInterface;
+use App\Services\User\UserService;
+use App\Services\User\UserServiceInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ResponseServiceInterface::class, ResponseService::class);
         $this->app->bind(AuthServiceInterface::class, AuthService::class);
         $this->app->bind(UnitServiceInterface::class, UnitService::class);
+        $this->app->bind(UserServiceInterface::class, UserService::class);
     }
 
     /**
