@@ -25,7 +25,11 @@ class AdministratorRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'max:255'],
+            'branch_id' => ['required', 'numeric', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'contact_no' => ['nullable', 'max:255'],
+            'role_id' => ['required', 'max:255'],
+            'notify_email_verification' => ['required', 'boolean'],
         ];
     }
 }

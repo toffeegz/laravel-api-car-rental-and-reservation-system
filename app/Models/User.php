@@ -20,7 +20,8 @@ class User extends Authenticatable
         'role_id',
         'branch_id',
         'validid_verified_at',
-        'email_verified_at',
+        'validid_verified_at',
+        'verified_by',
         'password',
         'is_active',
     ];

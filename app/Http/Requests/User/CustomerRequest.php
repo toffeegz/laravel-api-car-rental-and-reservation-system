@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+// use Illuminate\Foundation\Http\JsonRequest;
 
 class CustomerRequest extends FormRequest
 {
@@ -24,12 +25,12 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'numeric', 'max:255'],
-            'branch_id' => ['required', 'numeric', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'branch_id' => ['nullable', 'numeric', 'max:255'],
+            'validid_verified_at' => ['nullable', 'date', 'before_or_equal:now'],
+            'email' => ['nullable', 'email', 'required_without_all:contact_no', 'max:255'],
+            'contact_no' => ['nullable', 'required_without_all:email', 'max:255'],
+            'notify_email_verification' => ['required', 'boolean'],
         ];
     }
 }
