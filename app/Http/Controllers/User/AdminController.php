@@ -47,7 +47,12 @@ class AdminController extends Controller
      */
     public function store(ModelRequest $request)
     {
-        $result = $this->modelRepository->create($request->all());
+        $validatedData = $request->validated();
+
+        $allowedColumns = array_keys($validatedData);
+        $data = $request->only($allowedColumns);
+
+        $result = $this->modelRepository->userCreate($data, true);
         return $this->responseService->storeResponse($this->name, $result);
     }
 
