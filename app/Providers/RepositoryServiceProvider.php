@@ -33,6 +33,8 @@ use App\Repositories\UnitClassification\UnitClassificationRepository;
 use App\Repositories\UnitClassification\UnitClassificationRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Verification\VerificationRepository;
+use App\Repositories\Verification\VerificationRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -58,6 +60,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UnitRepositoryInterface::class, UnitRepository::class);
         $this->app->bind(UnitClassificationRepositoryInterface::class, UnitClassificationRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(VerificationRepositoryInterface::class, VerificationRepository::class);
     }
 
     /**
