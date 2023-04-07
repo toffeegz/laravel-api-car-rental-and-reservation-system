@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Reservation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class ReservationRequest extends FormRequest
+class AdminReservationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class ReservationRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -27,6 +26,7 @@ class ReservationRequest extends FormRequest
         return [
             'unit_id' => ['required', 'numeric', 'max:255'],
             'user_id' => ['required', 'numeric', 'max:255'],
+            'status' => ['required', 'numeric', 'max:10'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'pickup_location' => ['required', 'min:3', 'max:255'],
