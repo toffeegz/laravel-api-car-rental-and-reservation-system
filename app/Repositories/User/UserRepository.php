@@ -29,6 +29,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $this->model = $this->model->with($relations);
         }
 
+        if ($is_customer === true) {
+            $this->model = $this->model->select(['id', 'email', 'name', 'contact_no', 'branch_id', 'validid_verified_at', 'email_verified_at', 'is_active', 'verified_by', 'created_at', 'updated_at']);
+        } else {
+            $this->model = $this->model->select(['id', 'name', 'email', 'contact_no', 'role_id', 'email_verified_at', 'is_active', 'created_at', 'updated_at']);
+        }
+
+
         return $this->model->filter($search)->orderBy($sortByColumn, $sortBy)->paginate(request('limit') ?? 10);
     }
 
@@ -39,6 +46,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         
         if($relations) {
             $this->model = $this->model->with($relations);
+        }
+
+        if ($is_customer === true) {
+            $this->model = $this->model->select(['id', 'email', 'name', 'contact_no', 'branch_id', 'validid_verified_at', 'email_verified_at', 'is_active', 'verified_by', 'created_at', 'updated_at', 'deleted_at']);
+        } else {
+            $this->model = $this->model->select(['id', 'name', 'email', 'contact_no', 'role_id', 'email_verified_at', 'is_active', 'created_at', 'updated_at', 'deleted_at']);
         }
 
         return $this->model->filter($search)->orderBy($sortByColumn, $sortBy)->paginate(request('limit') ?? 10);
