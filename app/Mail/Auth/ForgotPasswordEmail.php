@@ -19,11 +19,11 @@ class ForgotPasswordEmail extends Mailable
      * @return void
      */
     public $user;
-    public $token;
+    public $url;
     public function __construct($user, $token)
     {
         $this->user = $user;
-        $this->token = $token;
+        $this->url = config('rental_reservation.frontend_url') . 'change-password?token=' . $token;
     }
 
     /**
