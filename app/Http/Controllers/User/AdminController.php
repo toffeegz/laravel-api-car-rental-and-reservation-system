@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\User\AdminRequest as ModelRequest;
+use App\Http\Resources\AdministratorResource;
 
 class AdminController extends Controller
 {
@@ -53,7 +54,7 @@ class AdminController extends Controller
         $data = $request->only($allowedColumns);
 
         $result = $this->modelRepository->userCreate($data, true);
-        return $this->responseService->storeResponse($this->name, $result);
+        return $this->responseService->storeResponse($this->name, new AdministratorResource($result));
     }
 
     /**
@@ -65,7 +66,7 @@ class AdminController extends Controller
     public function show($id)
     {
         $result = $this->modelRepository->show($id);
-        return $this->responseService->successResponse($this->name, $result);
+        return $this->responseService->successResponse($this->name, new AdministratorResource($result));
     }
 
     /**
@@ -78,7 +79,7 @@ class AdminController extends Controller
     public function update(ModelRequest $request, $id)
     {
         $result = $this->modelRepository->update($request->all(), $id);
-        return $this->responseService->updateResponse($this->name, $result);
+        return $this->responseService->updateResponse($this->name, new AdministratorResource($result));
     }
 
     /**
@@ -90,13 +91,13 @@ class AdminController extends Controller
     public function delete(string $id)
     {
         $result = $this->modelRepository->delete($id);
-        return $this->responseService->successResponse($this->name, $result);
+        return $this->responseService->successResponse($this->name, new AdministratorResource($result));
     }
 
     public function restore(string $id)
     {
         $result = $this->modelRepository->restore($id);
-        return $this->responseService->successResponse($this->name, $result);
+        return $this->responseService->successResponse($this->name, new AdministratorResource($result));
     }
 
 }

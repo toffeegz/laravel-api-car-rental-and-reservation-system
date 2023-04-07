@@ -9,6 +9,7 @@ use App\Services\User\UserServiceInterface;
 use App\Services\Utils\Response\ResponseServiceInterface;
 use App\Http\Requests\User\CustomerRequest as ModelRequest;
 use Illuminate\Support\Facades\Log;
+use App\Http\Resources\CustomerResource;
 
 class CustomerController extends Controller
 {
@@ -56,7 +57,7 @@ class CustomerController extends Controller
         $allowedColumns = array_keys($validatedData);
         $data = $request->only($allowedColumns);
         $result = $this->modelService->store($data, false);
-        return $this->responseService->storeResponse($this->name, $result);
+        return $this->responseService->storeResponse($this->name, new CustomerResource($result));
     }
 
     /**
@@ -68,7 +69,7 @@ class CustomerController extends Controller
     public function show($id)
     {
         $result = $this->modelRepository->show($id);
-        return $this->responseService->successResponse($this->name, $result);
+        return $this->responseService->successResponse($this->name, new CustomerResource($result));
     }
 
     /**
@@ -81,7 +82,7 @@ class CustomerController extends Controller
     public function update(ModelRequest $request, $id)
     {
         $result = $this->modelRepository->update($request->all(), $id);
-        return $this->responseService->updateResponse($this->name, $result);
+        return $this->responseService->updateResponse($this->name, new CustomerResource($result));
     }
 
     /**
@@ -93,13 +94,13 @@ class CustomerController extends Controller
     public function delete(string $id)
     {
         $result = $this->modelRepository->delete($id);
-        return $this->responseService->successResponse($this->name, $result);
+        return $this->responseService->successResponse($this->name, new CustomerResource($result));
     }
 
     public function restore(string $id)
     {
         $result = $this->modelRepository->restore($id);
-        return $this->responseService->successResponse($this->name, $result);
+        return $this->responseService->successResponse($this->name, new CustomerResource($result));
     }
 
 }
