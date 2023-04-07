@@ -10,6 +10,7 @@ return [
     | Reservation Status
     | User Status
     */
+    'frontend_url' => env('FRONTEND_URL', 'http://127.0.0.1:8080/'),
     
     'reservation_status' => [
         'PENDING' => 1,
