@@ -19,4 +19,20 @@ class ReservationRepository extends BaseRepository implements ReservationReposit
     {
         parent::__construct($model);
     }
+
+    public function findByUnitAndDateRange(string $unit_id, $startDate, $endDate)
+    {
+        return $this->model->where('unit_id', $unit_id)
+            ->where('status', 2)
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('start_date', [$startDate, $endDate])
+                    ->orWhereBetween('end_date', [$startDate, $endDate])
+                    ->orWhere(function ($query) use ($startDate, $endDate) {
+                        $query->where('start_date', '<', $startDate)
+                            ->where('end_date', '>', $endDate);
+                    });
+            })
+            ->get();
+    }
+
 }

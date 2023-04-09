@@ -5,5 +5,5 @@ use App\Repositories\Reservation\ReservationRepositoryInterface;
 
 interface ReservationServiceInterface
 {
-    public function store(array $attributes, bool $created_by_admin);
+    public function unitCalendar(string $unit_id);
 }
